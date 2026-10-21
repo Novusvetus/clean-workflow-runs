@@ -1,0 +1,24 @@
+name: Sponsors labels
+
+on:
+  pull_request:
+    types: [opened]
+  issues:
+    types: [opened]
+
+permissions:
+  issues: write
+  pull-requests: write
+
+jobs:
+  labels:
+    name: 💖️ Sponsors labels
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: 💖️ Check sponsors labels
+        uses: JasonEtco/is-sponsor-label-action@565f3cb67b3518a8aae36c3f0bce9e8513430e84 # v2
+        with:
+          label: "sponsor 💖"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

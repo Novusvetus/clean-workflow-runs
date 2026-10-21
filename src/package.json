@@ -1,0 +1,43 @@
+{
+	"name": "clean-workflow-runs",
+	"version": "1.0.0",
+	"description": "Flexible and configurable action for removing completed workflow runs.",
+	"author": "Novusvetus / Marcel Rudolf <development@novusvetus.de>",
+	"type": "module",
+	"contributors": [
+		"dmvict",
+		"Novusvetus / Marcel Rudolf <development@novusvetus.de>"
+	],
+	"license": "MIT",
+	"homepage": "https://github.com/Novusvetus/clean-workflow-runs",
+	"keywords": [
+		"action",
+		"clean",
+		"delete",
+		"remove",
+		"purge",
+		"github",
+		"workflow",
+		"workflow run"
+	],
+	"scripts": {
+		"build": "vite build"
+	},
+	"engines": {
+		"node": ">=22.12.0"
+	},
+	"repository": "https://github.com/Novusvetus/clean-workflow-runs",
+	"bugs": "https://github.com/Novusvetus/clean-workflow-runs/issues",
+	"main": "src/Main.js",
+	"dependencies": {
+		"@actions/core": "3.0.1",
+		"@octokit/rest": "22.0.1"
+	},
+	"devDependencies": {
+		"vite": "^8.3.4"
+	},
+	"files": [
+		"src/Lib.js",
+		"src/Main.js"
+	]
+}

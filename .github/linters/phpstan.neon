@@ -1,0 +1,15 @@
+parameters:
+    # PSR-12 standard compliance level
+    level: max
+
+    # Path exclusions - aligned with PHPCS exclusions
+    excludePaths:
+        - ../../vendor/*
+        - ../../node_modules/*
+
+    # Strict rules for better type checking
+    checkUnionTypes: true
+    checkExplicitMixed: true
+    treatPhpDocTypesAsCertain: false
+    checkPhpDocMissingReturn: true
+

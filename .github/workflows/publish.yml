@@ -1,0 +1,63 @@
+name: publish
+
+on: # yamllint disable-line rule:truthy
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: 🧪 Test (${{ matrix.os }}, Node ${{ matrix.node-version }})
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        node-version: [22.x, 24.x]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 15
+    steps:
+      - name: ⤵️ Check out code from GitHub
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+
+      - name: ⚙️ Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: ${{ matrix.node-version }}
+          package-manager-cache: false
+          cache-dependency-path: src/package-lock.json
+
+      - name: 📦 Install dependencies
+        working-directory: src
+        run: npm ci
+
+      - name: 🏗️ Build action bundle
+        working-directory: src
+        run: npm run build
+
+  publish:
+    name: 🚀 Publish release
+    needs: test
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: ⤵️ Check out code from GitHub
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+
+      - name: 🚀 Create release
+        uses: alice-biometrics/release-creator@6f67053fecb1117426b29c76d39a7a4dc0053d61 # v1.0.5
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          version: ${{ github.ref_name }}
+          description: "Release ${{ github.ref_name }}"
+          branch: main
+          prerelease: false
+          draft: false
