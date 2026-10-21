@@ -1,26 +1,23 @@
-
-'use strict';
-
-const core = require( '@actions/core' );
-const action = require( './Lib.js' );
+import * as action from "./Lib.js";
 
 //
 
-async function run()
-{
-  const options = action.actionOptionsGet();
-  const runs = await action.workflowRunsGet( options );
-  const filtered = action.workflowRunsFilter( runs, options );
-  return action.workflowRunsClean( filtered, options );
+async function run() {
+	const options = action.actionOptionsGet();
+	const runs = await action.workflowRunsGet(options);
+	const filtered = action.workflowRunsFilter(runs, options);
+	const filteredByClosedPullRequests =
+		await action.workflowRunsFilterByClosedPullRequests(filtered, options);
+	return action.workflowRunsClean(filteredByClosedPullRequests, options);
 }
 
 //
 
-run().then( ( e ) =>
-{
-  return e;
-})
-.catch( ( err ) =>
-{
-  core.setFailed( err.message );
-});
+run()
+	.then((e) => {
+		return e;
+	})
+	.catch((err) => {
+		console.error(err.message);
+		process.exit(1);
+	});

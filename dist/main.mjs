@@ -1,0 +1,1 @@
+import{actionOptionsGet as e,workflowRunsClean as t,workflowRunsFilter as n,workflowRunsFilterByClosedPullRequests as r,workflowRunsGet as i}from"./Lib.mjs";async function a(){let a=e(),o=await i(a),s=n(o,a),c=await r(s,a);return t(c,a)}a().then(e=>e).catch(e=>{console.error(e.message),process.exit(1)});

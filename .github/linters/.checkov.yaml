@@ -1,0 +1,8 @@
+---
+# Don't report passed checks in output
+quiet: true
+# Skip vendor files
+skip-path:
+  - "auth.json"
+  - "vendor"
+  - "node_modules"

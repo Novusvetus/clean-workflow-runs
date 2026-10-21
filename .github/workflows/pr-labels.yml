@@ -1,0 +1,23 @@
+name: PR Labels
+
+on:
+  pull_request:
+    types: [opened, labeled, unlabeled, synchronize]
+
+permissions:
+  pull-requests: write
+
+jobs:
+  pr_labels:
+    name: 🏭 Verify
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: 🏷 Verify PR has a valid label
+        uses: jesusvasquez333/verify-pr-label-action@657d111bbbe13e22bbd55870f1813c699bde1401 # v1.4.0
+        with:
+          github-token: "${{ secrets.GITHUB_TOKEN }}"
+          valid-labels: >-
+            bug, documentation, enhancement, refactor, performance, new feature, maintenance,
+            ci, dependencies, design / ux, discussion, idea, chore, tests, question, security
+          disable-reviews: true

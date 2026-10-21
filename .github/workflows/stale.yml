@@ -1,0 +1,39 @@
+name: Stale
+
+on:
+  schedule:
+    - cron: "0 8 * * *"
+  workflow_dispatch:
+
+permissions:
+  issues: write
+  pull-requests: write
+
+jobs:
+  stale:
+    name: 🧹 Clean up stale issues and PRs
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: 🚀 Run stale
+        uses: actions/stale@4391f3da665fdf50b6810c1a66712fb9ba21aa93 # v11
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          days-before-stale: 180
+          days-before-close: 7
+          remove-stale-when-updated: true
+          enable-statistics: true
+          stale-issue-label: "stale"
+          exempt-issue-labels: "no stale,help wanted"
+          stale-issue-message: >
+            Looks like this issue has been taking a nap 😴.
+            We're tidying up old and inactive issues to keep the place fresh.
+            Please double-check with the latest version - if the problem is still around, just drop us a comment and we'll wake this one back up 👍.
+            If nothing happens in the next 7 days, the issue will quietly wander off into the archive soon. Thanks for helping us keep things neat!
+          stale-pr-label: "stale"
+          exempt-pr-labels: "no stale"
+          stale-pr-message: >
+            This pull request has been sitting quietly for a while 💤.
+            To keep things moving, we've marked it as stale.
+            If you're still working on it, no worries - just leave a comment or push some updates and it'll spring back to life 👍.
+            If nothing happens, it will politely close itself in 7 days. Thanks a lot for your contribution!

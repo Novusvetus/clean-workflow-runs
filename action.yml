@@ -1,41 +1,43 @@
-
-name: 'Clean workflow runs'
-author : dmvict <dm.vict.kr@gmail.com>
+name: "Workflow Runs Cleanup (Novusvetus)"
+author: "Novusvetus / Marcel Rudolf <development@novusvetus.de> (original concept by dmvict)"
 branding:
-  icon: 'scissors'
-  color: 'white'
-description: 'Flexible and configurable action for removing completed workflow runs.'
+  icon: "scissors"
+  color: "white"
+description: "Delete old GitHub Actions workflow runs by age, branch, conclusion, and closed PR status."
 inputs:
   token:
-    description: 'A personal access token.'
+    description: "GitHub token for workflow-runs cleanup API calls."
     required: false
     default: ${{ github.token }}
   repo:
-    description: 'A repository from which delete workflow runs. Default is the current repository.'
+    description: "Target repository in {owner}/{repo} format."
     required: false
     default: ${{ github.repository }}
   workflow_id:
-    description: 'A filename of workflow or its id. By default, the action grabs all workflows.'
+    description: "Workflow filename or numeric workflow ID to scope cleanup."
     required: false
   branch:
-    description: 'A branch from which delete workflow runs. By default, the action grabs all branches.'
+    description: "Branch name to clean runs for. Defaults to all branches."
     required: false
   run_conclusions:
-    description: 'Filter for workflow runs conclusion. Accepts all available conclusions.'
+    description: "Run conclusion filters (e.g. success, failure, cancelled, skipped)."
     required: false
   save_period:
-    description: 'Determines period during which the workflow runs will be saved.'
+    description: "Retention window to keep runs. Number = days, or hh:mm:ss."
     required: false
     default: 90
   save_min_runs_number:
-    description: 'A minimal number of completed runs which will be saved.'
+    description: "Minimum number of matching completed runs to keep."
     required: false
     default: 10
   dry:
-    description: 'Enables dry run of action. Action will print the list of workflow runs to delete.'
+    description: "Dry-run mode: prints runs that would be deleted."
+    required: false
+    default: false
+  only_closed_pull_requests:
+    description: "When true, delete only runs from branches that have at least one closed PR."
     required: false
     default: false
 runs:
-  using: node20
-  main: 'dist/main.js'
-
+  using: node24
+  main: "dist/main.mjs"

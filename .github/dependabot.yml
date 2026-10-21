@@ -1,0 +1,37 @@
+version: 2
+updates:
+  # Maintain dependencies for GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "cron"
+      cronjob: "0 16 * * 5"
+      timezone: "Europe/Berlin"
+    assignees:
+      - "novusvetus"
+    reviewers:
+      - "novusvetus"
+    labels:
+      - "maintenance"
+      - "dependencies"
+    open-pull-requests-limit: 10
+    cooldown:
+      default-days: 7
+
+  # Maintain dependencies for npm
+  - package-ecosystem: "npm"
+    directory: "/src"
+    schedule:
+      interval: "cron"
+      cronjob: "0 16 * * 5"
+      timezone: "Europe/Berlin"
+    assignees:
+      - "novusvetus"
+    reviewers:
+      - "novusvetus"
+    labels:
+      - "maintenance"
+      - "dependencies"
+    open-pull-requests-limit: 10
+    cooldown:
+      default-days: 7

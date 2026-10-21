@@ -1,0 +1,42 @@
+name: Workflow runs cleanup
+
+on:
+  schedule:
+    - cron: "0 0 * * *"
+  workflow_dispatch:
+
+permissions:
+  actions: write
+  contents: read
+
+jobs:
+  stale:
+    name: 🧹 Clean up all old GitHub Actions workflow runs
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: 🧹 Cleanup cancelled and skipped workflow runs older than 1 day
+        uses: Novusvetus/clean-workflow-runs@58d551203de38af6198fcf77485cb3efa9907284
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          run_conclusions: |
+            cancelled
+            skipped
+          save_period: 1
+          save_min_runs_number: 0
+
+      - name: 🧹 Cleanup successful workflow runs
+        uses: Novusvetus/clean-workflow-runs@58d551203de38af6198fcf77485cb3efa9907284
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          run_conclusions: |
+            success
+          save_period: 7
+          save_min_runs_number: 1
+
+      - name: 🧹 Cleanup all old workflow runs older than 30 days
+        uses: Novusvetus/clean-workflow-runs@58d551203de38af6198fcf77485cb3efa9907284
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          save_period: 30
+          save_min_runs_number: 1

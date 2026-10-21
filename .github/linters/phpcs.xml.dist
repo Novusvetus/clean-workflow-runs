@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<ruleset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Shopware6" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/squizlabs/PHP_CodeSniffer/master/phpcs.xsd">
+    <description>PHP_CodeSniffer configuration for Shopware 6, based on PSR-12</description>
+
+    <!-- Use PSR-12 as base standard -->
+    <rule ref="PSR12"/>
+
+    <!-- File exclusions -->
+    <exclude-pattern>*/node_modules/*</exclude-pattern>
+    <exclude-pattern>*/vendor/*</exclude-pattern>
+
+    <!-- Configuration arguments -->
+    <arg name="tab-width" value="4"/>
+    <arg value="p"/>
+    <arg name="extensions" value="php"/>
+
+    <!-- Additional rules mapping PhpCsFixer configuration -->
+
+    <!-- Commenting rules -->
+    <rule ref="PEAR.Commenting.FunctionComment"/>
+    <rule ref="PEAR.Commenting.ClassComment"/>
+
+    <!-- Class rules -->
+    <rule ref="Squiz.Classes.ClassFileName"/>
+    <rule ref="Squiz.Classes.SelfMemberReference"/>
+
+    <!-- Function/Method rules - argument spacing -->
+    <rule ref="Squiz.Functions.FunctionDeclarationArgumentSpacing">
+        <properties>
+            <property name="equalsSpacing" value="1"/>
+        </properties>
+    </rule>
+
+    <!-- Concat spacing (one space) -->
+    <rule ref="Squiz.Strings.ConcatenationSpacing">
+        <properties>
+            <property name="spacing" value="1"/>
+        </properties>
+    </rule>
+
+    <!-- Control structures - else if declaration -->
+    <rule ref="Squiz.ControlStructures.ElseIfDeclaration"/>
+
+    <!-- Operators - comparison -->
+    <rule ref="Squiz.Operators.ComparisonOperatorUsage"/>
+
+    <!-- PHP rules -->
+    <rule ref="Squiz.PHP.CommentedOutCode"/>
+
+    <!-- Arrays -->
+    <rule ref="Squiz.Arrays.ArrayBracketSpacing"/>
+
+    <!-- Whitespace -->
+    <rule ref="PEAR.WhiteSpace.ScopeClosingBrace"/>
+    <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace"/>
+
+</ruleset>
