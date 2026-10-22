@@ -108,10 +108,11 @@ async function workflowRunsGet(options) {
 	const opts = {
 		owner: options.owner,
 		repo: options.repo,
-		branch: options.branch,
 		per_page: 100,
 		page: 1,
 	};
+	if (options.branch) opts.branch = options.branch;
+
 	if (options.workflowId) {
 		opts.workflow_id = options.workflowId;
 		listWorkflowRunsRoutine = octokit.actions.listWorkflowRuns;
@@ -135,18 +136,18 @@ function workflowRunsFilter(runs, options) {
 	if (options.conclusions?.length)
 		result = result.filter((e) => options.conclusions.includes(e.conclusion));
 
-	let saveMinRunsNumber = options.saveMinRunsNumber;
-	if (!saveMinRunsNumber || typeof saveMinRunsNumber !== "number")
-		saveMinRunsNumber = 0;
+	result = result.sort(
+		(a, b) => Date.parse(b.updated_at) - Date.parse(a.updated_at),
+	);
 
-	const savePeriod = Date.now() - options.savePeriod;
-	result = result.filter((e) => {
-		if (Date.parse(e.updated_at) < savePeriod) return true;
-		saveMinRunsNumber -= 1;
-		return false;
-	});
+	const keepIds = new Set(
+		result.slice(0, options.saveMinRunsNumber).map((run) => run.id),
+	);
 
-	if (saveMinRunsNumber > 0) result.splice(0, options.saveMinRunsNumber);
+	const cutoff = Date.now() - options.savePeriod;
+	result = result.filter(
+		(run) => Date.parse(run.updated_at) < cutoff && !keepIds.has(run.id),
+	);
 
 	return result;
 }
