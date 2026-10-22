@@ -16,7 +16,7 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: 🧹 Cleanup cancelled and skipped workflow runs older than 1 day
-        uses: Novusvetus/clean-workflow-runs@8455df628c20f206b508aa3db40f350e808ec90c # v1.0.0
+        uses: Novusvetus/clean-workflow-runs@fa3af4520c079c586ac3f5d14cfc92a462e87ab9 # v1.0.1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           run_conclusions: |
@@ -26,7 +26,7 @@ jobs:
           save_min_runs_number: 0
 
       - name: 🧹 Cleanup successful workflow runs
-        uses: Novusvetus/clean-workflow-runs@8455df628c20f206b508aa3db40f350e808ec90c # v1.0.0
+        uses: Novusvetus/clean-workflow-runs@fa3af4520c079c586ac3f5d14cfc92a462e87ab9 # v1.0.1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           run_conclusions: |
@@ -35,7 +35,7 @@ jobs:
           save_min_runs_number: 1
 
       - name: 🧹 Cleanup all old workflow runs older than 30 days
-        uses: Novusvetus/clean-workflow-runs@8455df628c20f206b508aa3db40f350e808ec90c # v1.0.0
+        uses: Novusvetus/clean-workflow-runs@fa3af4520c079c586ac3f5d14cfc92a462e87ab9 # v1.0.1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           save_period: 30
